@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menaxhimi i Studenteve</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-graduate"></i> Menaxhimi i Studenteve</h1>
+            <p class="subtitle">Aplikacion për regjistrimin dhe menaxhimin e studentëve</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="register">
+                <i class="fas fa-user-plus"></i> Regjistro Student
+            </button>
+            <button class="tab-btn" data-tab="students">
+                <i class="fas fa-users"></i> Lista e Studenteve
+                <span class="badge" id="studentCount">0</span>
+            </button>
+        </nav>
+
+        <section id="register" class="tab-content active">
+            <div class="card">
+                <h2><i class="fas fa-user-edit"></i> Regjistro Student të Ri</h2>
+                
+                <form id="studentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName"><i class="fas fa-user"></i> Emri</label>
+                            <input type="text" id="firstName" required placeholder="Shkruani emrin...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName"><i class="fas fa-user"></i> Mbiemri</label>
+                            <input type="text" id="lastName" required placeholder="Shkruani mbiemrin...">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faculty"><i class="fas fa-university"></i> Fakulteti</label>
+                            <select id="faculty" required>
+                                <option value="">Zgjidhni fakultetin...</option>
+                                <option value="Shkencat Natyrore">Shkencat Natyrore</option>
+                                <option value="Inxhinieri">Inxhinieri</option>
+                                <option value="Mjekësi">Mjekësi</option>
+                                <option value="Juridik">Juridik</option>
+                                <option value="Ekonomi">Ekonomi</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="year"><i class="fas fa-calendar-alt"></i> Viti i Studimeve</label>
+                            <select id="year" required>
+                                <option value="">Zgjidhni vitin...</option>
+                                <option value="1">Viti 1</option>
+                                <option value="2">Viti 2</option>
+                                <option value="3">Viti 3</option>
+                                <option value="4">Viti 4</option>
+                                <option value="5">Viti 5</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="email" required placeholder="student@universiteti.edu.al">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="grade"><i class="fas fa-star"></i> Nota (4-10)</label>
+                            <select id="grade" required>
+                                <option value="">Zgjidhni notën...</option>
+                                <option value="4">4 - Ngeles</option>
+                                <option value="5">5 - Kalues</option>
+                                <option value="6">6 - Mirë</option>
+                                <option value="7">7 - Mirë</option>
+                                <option value="8">8 - Shumë mirë</option>
+                                <option value="9">9 - Shumë mirë</option>
+                                <option value="10">10 - Shkëlqyeshëm</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i> Gjinia</label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="M" required>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Mashkull</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="gender" value="F" required>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Femër</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Ruaj Studentin
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-redo"></i> Pastro Formularin
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="formMessage" class="message hidden"></div>
+            </div>
+        </section>
+
+        <section id="students" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-list"></i> Studentët e Regjistruar</h2>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filterFaculty"><i class="fas fa-filter"></i> Fakulteti</label>
+                        <select id="filterFaculty">
+                            <option value="">Të gjithë</option>
+                            <option value="Shkencat Natyrore">Shkencat Natyrore</option>
+                            <option value="Inxhinieri">Inxhinieri</option>
+                            <option value="Mjekësi">Mjekësi</option>
+                            <option value="Juridik">Juridik</option>
+                            <option value="Ekonomi">Ekonomi</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="filterGrade"><i class="fas fa-filter"></i> Nota</label>
+                        <select id="filterGrade">
+                            <option value="">Të gjitha</option>
+                            <option value="4">4 - Ngeles</option>
+                            <option value="5">5 - Kalues</option>
+                            <option value="6">6 - Mirë</option>
+                            <option value="7">7 - Mirë</option>
+                            <option value="8">8 - Shumë mirë</option>
+                            <option value="9">9 - Shumë mirë</option>
+                            <option value="10">10 - Shkëlqyeshëm</option>
+                        </select>
+                    </div>
+                    
+                    <button id="clearFilters" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Pastro Filtra
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Emri</th>
+                                <th>Mbiemri</th>
+                                <th>Fakulteti</th>
+                                <th>Viti</th>
+                                <th>Nota</th>
+                                <th>Email</th>
+                                <th>Gjinia</th>
+                                <th>Data</th>
+                                <th>Veprime</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTableBody">
+                        </tbody>
+                    </table>
+                    
+                    <div id="emptyMessage" class="empty-message">
+                        <i class="fas fa-user-graduate"></i>
+                        <p>Nuk ka studentë të regjistruar. Shto studentin e parë!</p>
+                    </div>
+                </div>
+                
+                <div class="statistics">
+                    <div class="stat-card">
+                        <h3>Total Studentë</h3>
+                        <p id="totalStudents">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Mesatarja e Notave</h3>
+                        <p id="averageGrade">0.0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Nota Më e Lartë</h3>
+                        <p id="highestGrade">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Perqindja Femra</h3>
+                        <p id="femalePercentage">0%</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Menaxhimi i Studenteve. Projekt për shkollën.</p>
+            
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
